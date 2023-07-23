@@ -81,6 +81,7 @@ namespace GameCenter.Controllers
             // Создание нового пользователя
             var user = new IdentityUser
             {
+                Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username
             };
@@ -108,6 +109,7 @@ namespace GameCenter.Controllers
             // Создание нового пользователя
             var user = new IdentityUser
             {
+                Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username
             };

@@ -5,7 +5,7 @@
 namespace GameCenter.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class First : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
