@@ -4,20 +4,21 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System.Text;
+using System.Data.Entity;
 
 var builder = WebApplication.CreateBuilder(args);
 ConfigurationManager configuration = builder.Configuration;
-// Add services to the container.
+// Службы
 
-// For Entity Framework
+//EF
 builder.Services.AddDbContext<DBContext>(options => options.UseSqlServer(configuration.GetConnectionString("ConnectionString")));
 
-// For Identity
+//Проверка
 builder.Services.AddIdentity<IdentityUser, IdentityRole>()
     .AddEntityFrameworkStores<DBContext>()
     .AddDefaultTokenProviders();
 
-// Adding Authentication
+//Аутенификация
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -25,7 +26,7 @@ builder.Services.AddAuthentication(options =>
     options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
 })
 
-// Adding Jwt Bearer
+//Jwt Bearer
 .AddJwtBearer(options =>
 {
     options.SaveToken = true;
@@ -47,7 +48,7 @@ builder.Services.AddSwaggerGen();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// HTTP запросы
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();

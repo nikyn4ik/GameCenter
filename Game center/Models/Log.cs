@@ -2,7 +2,7 @@
 
 namespace GameCenter.Models
 {
-    public class Log
+    public class Log //Вход
     {
         [Required(ErrorMessage = "User Name is required")]
         public string? Username { get; set; }

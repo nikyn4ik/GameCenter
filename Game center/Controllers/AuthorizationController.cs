@@ -3,12 +3,9 @@ using GameCenter.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Win32;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
-using Microsoft.AspNetCore.Http;
-using static GameCenter.Controllers.ResponseController;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -33,7 +30,7 @@ namespace GameCenter.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> LoginAsync([FromBody] Log model)
+        public async Task<IActionResult> Login([FromBody] Log model)
         {
             // Поиск пользователя по имени
             var user = await _userManager.FindByNameAsync(model.Username);
@@ -79,12 +76,11 @@ namespace GameCenter.Controllers
             // Проверка существования пользователя с таким именем
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
-                return Conflict(new Response { Status = "Error", Message = "Пользователь уже существует!" });
+                return Conflict(new Reply { Status = "Error", Message = "Пользователь уже существует!" });
 
             // Создание нового пользователя
             var user = new IdentityUser
             {
-                Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username
             };
@@ -92,9 +88,9 @@ namespace GameCenter.Controllers
             // Регистрация пользователя в системе
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Ошибка создания пользователя! Пожалуйста, проверьте данные пользователя и попробуйте снова." });
+                return StatusCode(StatusCodes.Status500InternalServerError, new Reply { Status = "Error", Message = "Ошибка создания пользователя! Пожалуйста, проверьте данные пользователя и попробуйте снова." });
 
-            return Ok(new Response { Status = "Success", Message = "Пользователь успешно создан!" });
+            return Ok(new Reply { Status = "Success", Message = "Пользователь успешно создан!" });
         }
 
         [HttpPost("Test-admin")]
@@ -107,12 +103,11 @@ namespace GameCenter.Controllers
             // Проверка существования пользователя с таким именем
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
-                return Conflict(new Response { Status = "Error", Message = "Пользователь уже существует!" });
+                return Conflict(new Reply { Status = "Error", Message = "Пользователь уже существует!" });
 
             // Создание нового пользователя
             var user = new IdentityUser
             {
-                Email = model.Email,
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.Username
             };
@@ -120,12 +115,12 @@ namespace GameCenter.Controllers
             // Регистрация пользователя в системе
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "Ошибка создания пользователя! Пожалуйста, проверьте данные пользователя и попробуйте снова." });
+                return StatusCode(StatusCodes.Status500InternalServerError, new Reply { Status = "Error", Message = "Ошибка создания пользователя! Пожалуйста, проверьте данные пользователя и попробуйте снова." });
 
             // Создание и присвоение ролей пользователю
             await CreateAndAssignRolesAsync(user);
 
-            return Ok(new Response { Status = "Success", Message = "Пользователь успешно создан!" });
+            return Ok(new Reply { Status = "Success", Message = "Пользователь успешно создан!" });
         }
 
 

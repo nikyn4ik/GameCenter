@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GameCenter.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20230722230729_First")]
-    partial class First
+    [Migration("20230722235632_Initial Create")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -119,7 +119,7 @@ namespace GameCenter.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
-
+                        
                     b.HasIndex("NormalizedUserName")
                         .IsUnique()
                         .HasDatabaseName("UserNameIndex")
