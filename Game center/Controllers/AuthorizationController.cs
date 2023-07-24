@@ -37,7 +37,7 @@ namespace GameCenter.Controllers
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
             {
                 // Получение ролей пользователя
-                var UsRols = await _userManager.GetRolesAsync(user);
+                var usRols = await _userManager.GetRolesAsync(user);
 
                 // Формирование списка претензий для создания токена
                 var authClaims = new List<Claim>
@@ -47,7 +47,7 @@ namespace GameCenter.Controllers
                 };
 
                 // Добавление ролей в претензии
-                foreach (var usRol in UsRols)
+                foreach (var usRol in usRols)
                 {
                     authClaims.Add(new Claim(ClaimTypes.Role, usRol));
                 }
@@ -66,8 +66,8 @@ namespace GameCenter.Controllers
         }
 
 
-        [HttpPost("Test")]
-        public async Task<IActionResult> TestAsync([FromBody] Test model)
+        [HttpPost("Register")]
+        public async Task<IActionResult> RegisterAsync([FromBody] Register model)
         {
             // Проверка валидности модели
             if (!ModelState.IsValid)
@@ -94,8 +94,8 @@ namespace GameCenter.Controllers
             return Ok(new Reply { Status = "Success", Message = "Пользователь успешно создан!" });
         }
 
-        [HttpPost("Test-admin")]
-        public async Task<IActionResult> TestAdminAsync([FromBody] Test model)
+        [HttpPost("Register-admin")]
+        public async Task<IActionResult> RegisterAdminAsync([FromBody] Register model)
         {
             // Проверка валидности модели
             if (!ModelState.IsValid)

@@ -6,12 +6,11 @@ namespace GameCenter.Entities
 {
     public class DBContext : IdentityDbContext<IdentityUser>
     {
+        public DbSet<IdentityUser> Users { get; set; }
+
         public DBContext(DbContextOptions<DBContext> options) : base(options)
         {
-        }
-        protected override void OnModelCreating(ModelBuilder builder)
-        {
-            base.OnModelCreating(builder);
+
         }
     }
 }

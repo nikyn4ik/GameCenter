@@ -2,7 +2,7 @@
 
 namespace GameCenter.Models
 {
-    public class Test //Создание пользователя (временная регистрация)
+    public class Register //Создание пользователя (временная регистрация)
     {
         [Required(ErrorMessage = "User Name is required")]
         public string? Username { get; set; }
